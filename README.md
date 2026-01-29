@@ -112,3 +112,30 @@ Jetpack5.1.2 r35.4.1下载地址[Jetson Linux 35.4.1 |NVIDIA 开发者](https://
 
 在如上路径下此文件中将PY01修改为PQ01，PY03修改为PN01，如果是出场设置可以在gpioinfo里面看到PQ01是被regulator@106占用的，在源码中解除占用或替换即可
 
+## 添加SPI2
+
+1、在Orin_Jetson_Series_Pinmux_Config_Template-v2.1中按如下修改pinmux
+
+<img width="1440" height="113" alt="image" src="https://github.com/user-attachments/assets/828cce17-5160-4c68-a75c-be7abd2de4cc" />
+
+
+2、生成三个dtsi后替换gpio.dtsi和pinmux.dtsi
+
+路径如下 
+
+```
+OrinWork/Linux_for_Tegra/bootloader/tegra234-mb1-bct-gpio-p3701-0000-a04.dtsi
+
+Linux_for_Tegra/bootloader/t186ref/BCT/tegra234-mb1-bct-pinmux-p3701-0000-a04.dtsi
+```
+
+在flashlog中也可以看到路径
+
+```
+copying pinmux_config(/home/ayxx/OrinWork/Linux_for_Tegra/bootloader/t186ref/BCT/tegra234-mb1-bct-pinmux-p3701-0000-a04.dtsi)... done.
+```
+
+官方对于Orin_Jetson_Series_Pinmux_Config_Template-v2.1的使用说明，也是只复制gpio和pinmux
+
+[Jetson AGX Orin 平台适配与升级——NVIDIA Jetson Linux 开发者指南](https://docs.nvidia.com/jetson/archives/r36.4.4/DeveloperGuide/HR/JetsonModuleAdaptationAndBringUp/JetsonAgxOrinSeries.html#pinmux-changes)
+
