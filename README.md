@@ -117,7 +117,8 @@ Jetpack5.1.2 r35.4.1下载地址[Jetson Linux 35.4.1 |NVIDIA 开发者](https://
 
 1、板卡有两路422，首先依照原理图连接线
 
-![image-20260316145151349](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20260316145151349.png)
+<img width="689" height="370" alt="image-20260316145151349" src="https://github.com/user-attachments/assets/c12835bf-27a8-40c9-9a83-cf6e55773cec" />
+
 
 在此图中
 
@@ -148,7 +149,8 @@ sudo cutecom
 
 1、在Orin_Jetson_Series_Pinmux_Config_Template-v2.1中按如下修改pinmux
 
-![image-20260129141337117](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20260129141337117.png)
+<img width="1440" height="113" alt="image" src="https://github.com/user-attachments/assets/a240650e-5ca7-437f-9436-8c4dec2e5612" />
+
 
 2、生成三个dtsi后替换gpio.dtsi和pinmux.dtsi
 
@@ -321,7 +323,8 @@ spi@c260000 {
 
 6、但是，我们的pcc.02被regulator@116占用，所以需要将regulator@116的gpio注释掉，ps应该是和电源有关，修改后目前不影响，之后再编译后替换文件
 
-![image-20260317153158866](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20260317153158866.png)
+<img width="692" height="71" alt="image" src="https://github.com/user-attachments/assets/5878fc66-9af3-46a5-b005-0e4e1986bf0e" />
+
 
 		regulator@116 {
 			regulator-max-microvolt = <0x1b7740>;
@@ -345,7 +348,8 @@ dtc -I dts -O dtb my_current_system.dts -o modified_system.dtb	//编译
 sudo mv modified_system.dtb /boot/kernel_tegra234-p3701-0005-p3737-0000-user-custom.dtb
 ```
 
-![image-20260317153621546](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20260317153621546.png)
+<img width="1595" height="616" alt="image" src="https://github.com/user-attachments/assets/b52d1e0e-c96c-4ad3-a8f7-01c9e3c9ea39" />
+
 
 7、安装并使用spidevtest
 
@@ -357,7 +361,8 @@ gcc spidev_test.c -o spidev_test									//编译
 
 使用前需要probe spi的驱动，按原理图接好线，MOSI和MISO对接即可。
 
-![image-20260317155241030](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20260317155241030.png)
+<img width="389" height="234" alt="image" src="https://github.com/user-attachments/assets/d2fc5bfb-d6da-472b-b19c-15cf1f569160" />
+
 
 ```
 sudo modprobe spidev
@@ -365,7 +370,8 @@ sudo modprobe spidev
 ./spidev_test -D /dev/spidev1.0 -s 100000 -p "\x11\x22\x33" -v		//运行
 ```
 
-![image-20260317154502561](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20260317154502561.png)
+<img width="916" height="203" alt="image" src="https://github.com/user-attachments/assets/fb64e909-ac40-41f1-95ca-0ba57ff8509b" />
+
 
 PS：添加一个SPI@3230000的，应该也是在这里添加设备，往下可以看到c260000的节点，文件名为tegra234-p3737-0000-a04.dtsi，因保交付所以不深入研究，放在此处参考
 
@@ -405,7 +411,8 @@ PS：添加一个SPI@3230000的，应该也是在这里添加设备，往下可�
 
 1、在jetson-io.py中打开can，并按照原理图接线6<->4、2<->9
 
-![image-20260317155435340](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20260317155435340.png)
+<img width="442" height="279" alt="image" src="https://github.com/user-attachments/assets/2080a3c2-2703-48cc-b50a-0f7d8a332d98" />
+
 
 ```
 sudo /opt/nvidia/jetson-io/jetson-io.py
@@ -441,11 +448,13 @@ candump can0 #接受can帧
 
 can0收can1发
 
-![image-20260317160457846](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20260317160457846.png)
+<img width="533" height="625" alt="image" src="https://github.com/user-attachments/assets/e43024a0-c40c-4391-98d7-a1377918b47e" />
+
 
 can1收can0发
 
-![image-20260317160601155](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20260317160601155.png)
+<img width="533" height="698" alt="image" src="https://github.com/user-attachments/assets/08f40017-eea9-471f-ae3f-359a56784118" />
+
 
 测试通过
 
@@ -455,7 +464,8 @@ Orin AGX，硬件还添加了一个网口，型号为yt8521，不展示原理图
 
 1、Pinmux，还有一个reset脚就不截了，设为gpio即可，看硬件设计是什么了
 
-![image-20260317160810254](C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20260317160810254.png)
+<img width="1435" height="265" alt="image" src="https://github.com/user-attachments/assets/5928d3f5-8aaa-4770-b421-039ac0584dce" />
+
 
 2、设备树修改部分，在tegra234-ethernet-3737-0000.dtsi中添加节点，添加到6810000下面，最外面的大括号里面，东西具体什么含义查AI，变量名含义应该很好找了，也可以看下doc，变量名和内容也解释的很清楚
 
